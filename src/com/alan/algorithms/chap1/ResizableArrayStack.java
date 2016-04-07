@@ -35,6 +35,7 @@ public class ResizableArrayStack<Item> implements Iterable<Item> {
 		}
 	}
 
+	// the way to resize an array: create a new array...
 	private void resize(int size) {
 		Item[] temp = (Item[]) new Object[size];
 		for (int i=0; i<stack.length; i++) {
