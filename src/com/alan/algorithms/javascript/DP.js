@@ -1,5 +1,6 @@
 /*
  Classic problems which can be solved by Dynamic Programming
+ https://leetcode.com/problems/maximum-subarray/description/
  */
 
 // problem: maximum sub array: get the largest sum of consecutive sub-sequence
@@ -54,3 +55,26 @@ function LargestSum() {
 }
 
 LargestSum();
+
+/*
+ https://leetcode.com/problems/3sum/description/
+ Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? Find all UNIQUE triplets in the array which gives the sum of zero.
+ 玩转loop, 暴力求解经典的3-sum问题
+ */
+
+function threeSum() {
+	var test = [-1, 0, 1, 2, -1, -4];
+	var result = [];
+	for (var i = 0; i < test.length; i++) {
+		for (var j = i + 1; j < test.length; j++) {
+			for (var k = j + 1; k < test.length; k++) {
+				if (test[i] + test[j] + test[k] == 0) {
+					result.push([test[i], test[j], test[k]]);
+				}
+			}
+		}
+	}
+	console.log(result);
+}
+
+threeSum();
