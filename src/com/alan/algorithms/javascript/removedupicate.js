@@ -104,8 +104,8 @@ function removeDupLoop(collection) {
 	return collection;
 }
 
-// This one is actually faster than the previous implementation, give us the conclusion:
-// splice an element from an array implies reindex which is ususally heavy
+// This one is actually faster than the previous implementation
+// splice an element from an array implies reindex which is usually heavy
 function removeDupLoop2(collection) {
 	var timeStamp = new Date().getTime();
 	for (let i = collection.length - 1; i > 0; i--) {
