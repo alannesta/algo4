@@ -36,14 +36,14 @@ function solution1() {
 
 
 function solution2() {
-	var arr2 = [2, 4, 6, 6, 18, 20, 22, 23, 25];
-	var arr1 = [1, 2, 3, 4, 5, 7, 19];
+	var arr2 = [1, 2, 3, 7];
+	var arr1 = [2, 5, 6, 7, 8];
 
 	var merged = [];
 	var len1 = arr1.length, len2 = arr2.length, i = 0, j = 0;
 	for (; i < len1 || j < len2; ){
 		while(i < len1) {
-			// check when the array reaches its end
+			// check if the other array reaches its end
 			if (arr1[i]<arr2[j] || j == len2){
 				merged.push(arr1[i]);
 				i++;
@@ -52,7 +52,7 @@ function solution2() {
 			}
 		}
 		while(j < len2) {
-			// check when the array reaches its end
+			// check if the other array reaches its end
 			if (arr1[i] >= arr2[j] || i == len1){
 				merged.push(arr2[j]);
 				j++;
