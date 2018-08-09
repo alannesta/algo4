@@ -31,24 +31,40 @@ public class MergeSortedArray {
         int j = m - 1;
         int k = n - 1;
 
-        while (i >= 0) {
-            if (j >= 0 && k >= 0) {
-                if (nums1[j] > nums2[k]) {
-                    nums1[i] = nums1[j];
-                    j--;
-                } else {
-                    nums1[i] = nums2[k];
-                    k--;
-                }
-            } else if (k >= 0) {
-                nums1[i] = nums2[k];
-                k--;
-            } else if (j >= 0) {
-                nums1[i] = nums1[j];
-                j--;
+        //while (i >= 0) {
+        //    if (j >= 0 && k >= 0) {
+        //        if (nums1[j] > nums2[k]) {
+        //            nums1[i] = nums1[j];
+        //            j--;
+        //        } else {
+        //            nums1[i] = nums2[k];
+        //            k--;
+        //        }
+        //    } else if (k >= 0) {
+        //        nums1[i] = nums2[k];
+        //        k--;
+        //    } else if (j >= 0) {
+        //        nums1[i] = nums1[j];
+        //        j--;
+        //    }
+        //    i--;
+        //}
+
+        while (j >= 0 && k >= 0) {
+            if (nums1[j] > nums2[k]) {
+                nums1[i--] = nums1[j--];
+            } else if (nums1[j] <= nums2[k]) {
+                nums1[i--] = nums2[k--];
             }
-            i--;
         }
+        while (j >= 0) {
+            nums1[i--] = nums1[j--];
+        }
+
+        while (k >= 0) {
+            nums1[i--] = nums2[k--];
+        }
+
 
         for (int w : nums1) {
             System.out.println(w);
