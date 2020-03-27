@@ -1,4 +1,4 @@
-package com.alan.algorithms.chap1;
+package algorithms.chap1;
 
 public class test {
 	public static void main(String[] args) {

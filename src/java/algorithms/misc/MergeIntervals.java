@@ -1,4 +1,4 @@
-package com.alan.algorithms.misc;
+package algorithms.misc;
 
 import java.util.ArrayList;
 import java.util.Arrays;

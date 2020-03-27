@@ -1,8 +1,7 @@
-package com.alan.algorithms.chap2;
+package algorithms.chap2;
 
 import java.util.stream.IntStream;
 
-import com.alan.algorithms.chap1.ThreeSumFast;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.Stopwatch;

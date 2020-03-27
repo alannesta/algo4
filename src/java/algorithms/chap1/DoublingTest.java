@@ -1,11 +1,9 @@
-package com.alan.algorithms.chap1;
+package algorithms.chap1;
 
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
-import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.Stopwatch;
-import edu.princeton.cs.algs4.ThreeSum;
 
 public class DoublingTest {
 	private static final int MAXIMUM_INTEGER = 1000000;

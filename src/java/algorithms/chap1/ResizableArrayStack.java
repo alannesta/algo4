@@ -1,4 +1,4 @@
-package com.alan.algorithms.chap1;
+package algorithms.chap1;
 
 import java.util.Iterator;
 

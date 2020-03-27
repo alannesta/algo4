@@ -1,4 +1,4 @@
-package com.alan.algorithms.misc;
+package algorithms.misc;
 
 //https://leetcode.com/problems/remove-duplicates-from-sorted-array/description/
 //

@@ -1,4 +1,4 @@
-package com.alan.algorithms.chap2;
+package algorithms.chap2;
 
 import java.util.stream.IntStream;
 

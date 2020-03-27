@@ -1,9 +1,8 @@
-package com.alan.algorithms.chap1;
+package algorithms.chap1;
 
 
 import java.util.Arrays;
 
-import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 
 public class ThreeSumFast {
