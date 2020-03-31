@@ -15,7 +15,7 @@ console.log(knapsack2(collection, maxWeight));
 
 
 /*
- My solutions:
+ solution:
  valueMatrix[i] represents best values when item i is included. This is more complicated than
  the "official" version.
  In DP problems, generate a good sub-problem could reduce a lot of complexity
@@ -65,7 +65,7 @@ function knapsack(collection, maxWeight) {
 
 
 /*
- official version:
+ standard version:
  valueMatrix[i] represents best values when only consider the first i items.
  Please refer to the max consecutive sub-sequence sum problem to see another example of sub-problem
  */
