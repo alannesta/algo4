@@ -31,6 +31,7 @@ A for loop over all the nodes on the DAG, the visited list will prevent duplicat
 # import copy
 from collections import OrderedDict
 
+
 graph = OrderedDict()
 # graph = dict()
 graph[4] = [5, 6]
@@ -39,7 +40,7 @@ graph[0] = [2]
 graph[1] = [2, 3]
 graph[6] = []
 graph[2] = [4]
-graph[5] = [1]
+graph[5] = []
 
 
 visited = []
