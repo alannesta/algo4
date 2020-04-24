@@ -4,13 +4,19 @@ Max heap impl
 import math
 import copy
 
+
 class Heap:
     def __init__(self, size=None):
         self._heap_arr = []
 
+    @property
+    def size(self):
+        return len(self._heap_arr)
+
     def heapify(self, input_list):
         """
         in-place heapify
+        O(NlogN)
         """
         self._heap_arr = copy.copy(input_list)
         idx = 1
@@ -18,16 +24,36 @@ class Heap:
             self._bubble_up(idx)
             idx = idx + 1
 
+    def heapify_v2(self, start_idx=0):
+        """
+        O(N) by sift down approach described in:
+        https://en.wikipedia.org/wiki/Heapsort
+        """
+        if start_idx > self.size - 1:
+            return
+
+        l_node_idx = 2 * start_idx + 1
+        r_node_idx = 2 * (start_idx + 1)
+
+        if r_node_idx <= self.size - 1:
+            self.heapify_v2(l_node_idx)
+            self.heapify_v2(r_node_idx)
+            self._sift_down(start_idx, self.size - 1)
+
+        elif l_node_idx <= self.size - 1:
+            self.heapify_v2(l_node_idx)
+            self._sift_down(start_idx, self.size - 1)
+
     def add(self, value):
         self._heap_arr.append(value)
-        self._bubble_up(len(self._heap_arr) - 1)
+        self._bubble_up(self.size - 1)
 
     def pop_max(self):
-        self._swap(0, len(self._heap_arr) - 1)
+        self._swap(0, self.size - 1)
 
         max_val = self._heap_arr.pop()
 
-        self._sift_down()  # re-balance by sift down the root node
+        self._sift_down(0, self.size - 1)  # re-balance by sift down the root node
 
         return max_val
 
@@ -42,9 +68,9 @@ class Heap:
             else:
                 break
 
-    def _sift_down(self):
-        current_idx = 0
-        heap_size = len(self._heap_arr) - 1
+    def _sift_down(self, start_idx, end_idx):
+        current_idx = start_idx
+        heap_size = end_idx
         while True:
             l_child_idx = current_idx * 2 + 1
             r_child_idx = current_idx * 2 + 2
@@ -52,8 +78,9 @@ class Heap:
             if l_child_idx > heap_size:
                 break
 
-            if l_child_idx == heap_size and self._heap_arr[l_child_idx] > self._heap_arr[current_idx]:
-                self._swap(current_idx, l_child_idx)
+            if l_child_idx == heap_size:
+                if self._heap_arr[l_child_idx] > self._heap_arr[current_idx]:
+                    self._swap(current_idx, l_child_idx)
                 break
 
             if r_child_idx <= heap_size:
@@ -85,3 +112,13 @@ class Heap:
         temp = self._heap_arr[idx1]
         self._heap_arr[idx1] = self._heap_arr[idx2]
         self._heap_arr[idx2] = temp
+
+    # def _find_sub_tree_range(self, root_idx):
+    #     if 2 * (root_idx + 1) <= self.size - 1:
+    #         return 2 * (root_idx + 1)
+    #
+    #     elif 2 * root_idx + 1 <= self.size - 1:
+    #         return 2 * root_idx + 1
+    #
+    #     else:
+    #         return root_idx

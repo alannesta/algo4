@@ -27,7 +27,15 @@ def heapify_perf(input):
     ma_heap.heapify(input)
     # print(ma_heap._heap_arr)
 
+@timeit
+def heapify_perf_v2(input):
+    ma_heap = Heap()
+    ma_heap._heap_arr = input
+    ma_heap.heapify_v2()
+    # print(ma_heap._heap_arr)
 
-input = generate_random_integer_list(100 * 100 * 100 * 100 * 100, 10000)
+input = generate_random_integer_list(100 * 100 * 100 * 100 * 100, 100 * 100 * 100)
+# input = generate_random_integer_list(50, 10)
 
 heapify_perf(input)
+heapify_perf_v2(input)
