@@ -2,15 +2,25 @@
 Max heap impl
 """
 import math
-
+import copy
 
 class Heap:
     def __init__(self, size=None):
         self._heap_arr = []
 
+    def heapify(self, input_list):
+        """
+        in-place heapify
+        """
+        self._heap_arr = copy.copy(input_list)
+        idx = 1
+        while idx <= len(input_list) - 1:
+            self._bubble_up(idx)
+            idx = idx + 1
+
     def add(self, value):
         self._heap_arr.append(value)
-        self._bubble_up(value, len(self._heap_arr) - 1)
+        self._bubble_up(len(self._heap_arr) - 1)
 
     def pop_max(self):
         self._swap(0, len(self._heap_arr) - 1)
@@ -21,11 +31,11 @@ class Heap:
 
         return max_val
 
-    def _bubble_up(self, value, index):
+    def _bubble_up(self, index):
         while index > 0:
             parent_index = self._find_parent(index)
 
-            if value > self._heap_arr[parent_index]:
+            if self._heap_arr[index] > self._heap_arr[parent_index]:
                 self._swap(index, parent_index)
                 index = parent_index
 
