@@ -50,9 +50,13 @@ class Heap:
             self.heapify_v2(l_node_idx)
             self._sift_down(start_idx, self.size - 1)
 
-    def add(self, value):
-        self._heap_arr.append(value)
-        self._bubble_up(self.size - 1)
+    def push(self, value):
+        if self.size < self.size_limit:
+            self._heap_arr.append(value)
+            self._bubble_up(self.size - 1)
+        else:
+            self.pop_push(value)
+
 
     def pop(self):
         self._swap(0, self.size - 1)
@@ -62,6 +66,16 @@ class Heap:
         self._sift_down(0, self.size - 1)  # re-balance by sift down the root node
 
         return val
+
+    def pop_push(self, new_val):
+        pop_val = self._heap_arr[0]
+        self._heap_arr[0] = new_val
+        self._sift_down(0, self.size - 1)  # re-balance by sift down the root node
+
+        return pop_val
+
+    def peek(self):
+        return self._heap_arr[0]
 
     def _bubble_up(self, index):
         while index > 0:

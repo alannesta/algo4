@@ -20,7 +20,7 @@ def comparator(a, b):
 
 def topK(input, k):
     freq_dict = dict()
-    max_k_heap = Heap(size=k, comparator=comparator)
+    max_k_heap = Heap(size_limit=k, comparator=comparator)
 
     for i in input:
         count = freq_dict.get(i)
@@ -29,9 +29,16 @@ def topK(input, k):
         else:
             freq_dict[i] = 1
 
+    print(freq_dict)
     for item, freq in freq_dict.items():
-        max_k_heap.add((freq, item))    # push in the tuple, order will be decided by the comparator
+        if max_k_heap.size < k or max_k_heap.peek()[0] < freq:
+            max_k_heap.push((freq, item))  # push in the tuple, order will be decided by the comparator
+
 
     # output
     for i in range(0, k):
-        print(max_k_heap.pop[1])
+        print(max_k_heap.pop()[1])
+
+
+input = [1, 1, 2, 3, 3, 3, 4, 5, 6, 6, 6, 6, 8, 7, 5, 5, 5, 5]
+topK(input, 3)
