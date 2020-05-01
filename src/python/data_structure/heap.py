@@ -1,13 +1,19 @@
 """
-Max heap impl
+heap impl
 """
-import math
 import copy
 
 
+# The comparator will decide min/max heap
+def default_comparator(a, b):
+    return a - b > 0
+
+
 class Heap:
-    def __init__(self, size=None):
+    def __init__(self, size_limit=None, comparator=None):
         self._heap_arr = []
+        self.size_limit = size_limit
+        self.comparator = comparator or default_comparator  # default comparator is max heap
 
     @property
     def size(self):
@@ -48,20 +54,20 @@ class Heap:
         self._heap_arr.append(value)
         self._bubble_up(self.size - 1)
 
-    def pop_max(self):
+    def pop(self):
         self._swap(0, self.size - 1)
 
-        max_val = self._heap_arr.pop()
+        val = self._heap_arr.pop()
 
         self._sift_down(0, self.size - 1)  # re-balance by sift down the root node
 
-        return max_val
+        return val
 
     def _bubble_up(self, index):
         while index > 0:
             parent_index = self._find_parent(index)
 
-            if self._heap_arr[index] > self._heap_arr[parent_index]:
+            if self.comparator(self._heap_arr[index], self._heap_arr[parent_index]):
                 self._swap(index, parent_index)
                 index = parent_index
 
@@ -79,20 +85,20 @@ class Heap:
                 break
 
             if l_child_idx == heap_size:
-                if self._heap_arr[l_child_idx] > self._heap_arr[current_idx]:
+                if self.comparator(self._heap_arr[l_child_idx], self._heap_arr[current_idx]):
                     self._swap(current_idx, l_child_idx)
                 break
 
             if r_child_idx <= heap_size:
 
-                if self._heap_arr[l_child_idx] >= self._heap_arr[r_child_idx]:
-                    max_idx = l_child_idx
+                if not self.comparator(self._heap_arr[r_child_idx], self._heap_arr[l_child_idx]):
+                    swap_target_idx = l_child_idx
                 else:
-                    max_idx = r_child_idx
+                    swap_target_idx = r_child_idx
 
-                if self._heap_arr[max_idx] > self._heap_arr[current_idx]:
-                    self._swap(max_idx, current_idx)
-                    current_idx = max_idx
+                if self.comparator(self._heap_arr[swap_target_idx], self._heap_arr[current_idx]):
+                    self._swap(swap_target_idx, current_idx)
+                    current_idx = swap_target_idx
                 else:
                     break
 
