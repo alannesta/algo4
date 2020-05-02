@@ -1,3 +1,4 @@
+import heapq
 from data_structure.heap import Heap
 
 
@@ -22,18 +23,24 @@ from data_structure.heap import Heap
 
 # min heap
 def comparator(a, b):
-    return a - b < 0
+    return a - b > 0
 
 # heap with size limit
 empty_heap = Heap(size_limit=10, comparator=comparator)
 
-i_list = [2, 3, 5, 23, 21, 11, 10, 19, 8]
+i_list = [23, 2, 3, 5, 21, 11, 10, 19, 8]
 
 empty_heap._heap_arr = i_list
-empty_heap.heapify_v2()
+# empty_heap.heapify_v2()
+empty_heap.heapify_optimize(i_list)
 
 print(empty_heap._heap_arr)
-
 empty_heap.push(9)
 empty_heap.push(15)
 print(empty_heap._heap_arr)
+
+##############
+# stdlib heapq
+##############
+# heapq.heapify(i_list)
+# print(i_list)

@@ -24,15 +24,33 @@ class Heap:
         in-place heapify
         O(NlogN)
         """
-        self._heap_arr = copy.copy(input_list)
+        # self._heap_arr = copy.copy(input_list)
+        self._heap_arr = input_list
         idx = 1
         while idx <= len(input_list) - 1:
             self._bubble_up(idx)
             idx = idx + 1
 
+    def heapify_optimize(self, input_list):
+        """
+        O(N) in-place heapify
+        O(NlogN)
+        """
+        # self._heap_arr = copy.copy(input_list)
+        self._heap_arr = input_list
+        start_idx = self._find_parent(self.size - 1)
+
+        while True:
+            if start_idx >= 0:
+                self._sift_down(start_idx, self.size - 1)
+                start_idx = start_idx - 1
+            else:
+                break
+
+
     def heapify_v2(self, start_idx=0):
         """
-        O(N) by sift down approach described in:
+        recursion: sift down approach described in:
         https://en.wikipedia.org/wiki/Heapsort
         """
         if start_idx > self.size - 1:
@@ -56,7 +74,6 @@ class Heap:
             self._bubble_up(self.size - 1)
         else:
             self.pop_push(value)
-
 
     def pop(self):
         self._swap(0, self.size - 1)
@@ -93,7 +110,8 @@ class Heap:
         heap_size = end_idx
         while True:
             l_child_idx = current_idx * 2 + 1
-            r_child_idx = current_idx * 2 + 2
+            r_child_idx = l_child_idx + 1
+            # r_child_idx = current_idx * 2 + 2
 
             if l_child_idx > heap_size:
                 break
@@ -120,13 +138,15 @@ class Heap:
         if index == 0:
             return 0
 
-        if index % 2 == 0:
-            parent_index = index / 2 - 1
-
-        if index % 2 == 1:
-            parent_index = (index - 1) / 2
-
-        return int(parent_index)
+        return (index - 1) >> 1
+        # return index >> 1
+        # if index % 2 == 0:
+        #     parent_index = index / 2 - 1
+        #
+        # if index % 2 == 1:
+        #     parent_index = (index - 1) / 2
+        #
+        # return int(parent_index)
 
     def _swap(self, idx1, idx2):
         temp = self._heap_arr[idx1]
