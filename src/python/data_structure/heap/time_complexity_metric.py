@@ -1,23 +1,20 @@
-import random
-import functools
-import time
 import heapq
 
-from data_structure.heap import Heap
-
-
-def generate_random_integer_list(num_range, size):
-    return random.choices(range(1, num_range), k=size)
-
-
-def timeit(f):
-    @functools.wraps(f)
-    def wrapper(*args, **kwargs):
-        start = time.time()
-        f(*args, **kwargs)
-        print('time used: ', time.time() - start)
-
-    return wrapper
+from data_structure.heap.heap import Heap
+from util import timeit, generate_random_integer_list
+#
+# def generate_random_integer_list(num_range, size):
+#     return random.choices(range(1, num_range), k=size)
+#
+#
+# def timeit(f):
+#     @functools.wraps(f)
+#     def wrapper(*args, **kwargs):
+#         start = time.time()
+#         f(*args, **kwargs)
+#         print('time used: ', time.time() - start)
+#
+#     return wrapper
 
 
 # print(generate_random_integer_list(30, 10))
@@ -46,10 +43,11 @@ def heapify_perf_v2(input):
 def std_heapify(input):
     heapq.heapify(input)
 
-input = generate_random_integer_list(100 * 100 * 100 * 100 * 100, 100 * 100)
+input = generate_random_integer_list(100 * 100 * 100 * 100 * 100, 100 * 100 * 100)
 # input = generate_random_integer_list(50, 10)
 
 # heapify_perf(input)
-# heapify_perf_optimize(input)
+heapify_perf_optimize(input)
 # heapify_perf_v2(input)
-std_heapify(input)
+
+# std_heapify(input)

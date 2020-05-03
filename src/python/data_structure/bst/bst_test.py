@@ -1,4 +1,4 @@
-from data_structure.bst import BST, Node
+from data_structure.bst.bst import BST, Node
 
 
 #########
