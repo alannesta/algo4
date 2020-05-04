@@ -2,7 +2,7 @@
 heap impl
 """
 import copy
-
+import math
 
 # The comparator will decide min/max heap
 def default_comparator(a, b):
@@ -10,7 +10,7 @@ def default_comparator(a, b):
 
 
 class Heap:
-    def __init__(self, size_limit=None, comparator=None):
+    def __init__(self, size_limit=math.inf, comparator=None):
         self._heap_arr = []
         self.size_limit = size_limit
         self.comparator = comparator or default_comparator  # default comparator is max heap

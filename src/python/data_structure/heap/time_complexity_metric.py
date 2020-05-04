@@ -1,21 +1,7 @@
 import heapq
 
-from data_structure.heap.heap import Heap
+from data_structure.heap import Heap
 from util import timeit, generate_random_integer_list
-#
-# def generate_random_integer_list(num_range, size):
-#     return random.choices(range(1, num_range), k=size)
-#
-#
-# def timeit(f):
-#     @functools.wraps(f)
-#     def wrapper(*args, **kwargs):
-#         start = time.time()
-#         f(*args, **kwargs)
-#         print('time used: ', time.time() - start)
-#
-#     return wrapper
-
 
 # print(generate_random_integer_list(30, 10))
 

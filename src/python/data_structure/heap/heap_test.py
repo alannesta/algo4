@@ -1,5 +1,4 @@
-import heapq
-from data_structure.heap.heap import Heap
+from data_structure.heap import Heap
 
 
 # ma_heap = Heap()
