@@ -58,7 +58,25 @@ class MedianFinder:
             self.min_heap.push(self.max_heap.pop())
 
 
+class MedianFinder_Bruce:
+    def __init__(self):
+        self.nums = []
+
+    def add_number(self, num):
+        self.nums.append(num)
+        self.nums = sorted(self.nums)
+
+    def median(self):
+
+        size = len(self.nums)
+        if size % 2 == 0:
+            return (self.nums[size >> 1] + self.nums[(size >> 1) - 1]) / 2
+        else:
+            return self.nums[size >> 1]
+
+
 median_finder = MedianFinder()
+# median_finder = MedianFinder_Bruce()
 
 median_finder.add_number(3)
 median_finder.add_number(6)
@@ -70,6 +88,6 @@ median_finder.add_number(18)
 median_finder.add_number(9)
 median_finder.add_number(10)
 median_finder.add_number(100)
-median_finder.add_number(-10)
+# median_finder.add_number(-10)
 
 print(median_finder.median())
