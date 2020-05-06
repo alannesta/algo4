@@ -21,6 +21,7 @@ Window position                Median
  1  3  -1  -3  5 [3  6  7]      6
 Therefore, return the median sliding window as [1,-1,-1,3,5,6].
 """
+import bisect
 
 
 class SlidingWindowMedian:
@@ -55,8 +56,7 @@ class SlidingWindowMedian:
         self.current_window[-1] = None
 
     def _add_to_window(self, elem):
-        # put the elem as the last elem of the window, which should have been set to None already
-        # self.current_window[-1] = elem
+        # last elem is set to None in the remove step
         elem_idx = len(self.current_window) - 2
 
         # find the insertion point
@@ -75,19 +75,36 @@ class SlidingWindowMedian:
 
         self.current_window[insert_idx] = elem
 
+    def slide_bisect(self):
+        self.current_window.remove(self.input_list[self.cur_window_start])
+        bisect.insort_left(self.current_window, self.input_list[self.cur_window_start + self.window_size])
+        self.cur_window_start += 1
+
 
 kaka = [1, 3, -1, -3, 5, 3, 6, 7]
 window = 3
 slide_median = SlidingWindowMedian(kaka, window)
 
-print(slide_median.median())
-slide_median.slide()
-print(slide_median.median())
-slide_median.slide()
-print(slide_median.median())
-slide_median.slide()
-print(slide_median.median())
-slide_median.slide()
-print(slide_median.median())
-slide_median.slide()
-print(slide_median.median())
+# print(slide_median.median())
+# slide_median.slide()
+# print(slide_median.median())
+# slide_median.slide()
+# print(slide_median.median())
+# slide_median.slide()
+# print(slide_median.median())
+# slide_median.slide()
+# print(slide_median.median())
+# slide_median.slide()
+# print(slide_median.median())
+
+# print(slide_median.median())
+# slide_median.slide_bisect()
+# print(slide_median.median())
+# slide_median.slide_bisect()
+# print(slide_median.median())
+# slide_median.slide_bisect()
+# print(slide_median.median())
+# slide_median.slide_bisect()
+# print(slide_median.median())
+# slide_median.slide_bisect()
+# print(slide_median.median())
