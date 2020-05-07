@@ -22,6 +22,7 @@ Window position                Median
 Therefore, return the median sliding window as [1,-1,-1,3,5,6].
 """
 import bisect
+from search.binary_search import bisect as bsearch
 
 
 class SlidingWindowMedian:
@@ -43,7 +44,8 @@ class SlidingWindowMedian:
 
     def slide(self):
         self._remove_from_window(self.input_list[self.cur_window_start])
-        self._add_to_window(self.input_list[self.cur_window_start + self.window_size])
+        # self._add_to_window(self.input_list[self.cur_window_start + self.window_size])
+        self._add_to_window_binary_search(self.input_list[self.cur_window_start + self.window_size])
         self.cur_window_start += 1
 
     def _remove_from_window(self, elem):
@@ -75,16 +77,30 @@ class SlidingWindowMedian:
 
         self.current_window[insert_idx] = elem
 
+    def _add_to_window_binary_search(self, elem):
+        self.current_window[-1] = elem # this will be overriden later
+        # find the insertion point
+        insert_idx = bsearch(self.current_window, elem)
+
+        # insert_idx = elem_idx + 1  # insert to the next position
+
+        m_idx = len(self.current_window) - 1
+        while m_idx > insert_idx:
+            self.current_window[m_idx] = self.current_window[m_idx - 1]
+            m_idx -= 1
+
+        self.current_window[insert_idx] = elem
+
     def slide_bisect(self):
         self.current_window.remove(self.input_list[self.cur_window_start])
         bisect.insort_left(self.current_window, self.input_list[self.cur_window_start + self.window_size])
         self.cur_window_start += 1
 
 
-kaka = [1, 3, -1, -3, 5, 3, 6, 7]
-window = 3
-slide_median = SlidingWindowMedian(kaka, window)
-
+# kaka = [1, 3, -1, -3, 5, 3, 6, 7]
+# window = 3
+# slide_median = SlidingWindowMedian(kaka, window)
+#
 # print(slide_median.median())
 # slide_median.slide()
 # print(slide_median.median())

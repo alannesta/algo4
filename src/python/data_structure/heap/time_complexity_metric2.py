@@ -9,9 +9,9 @@ input = generate_random_integer_list(100 * 100 * 100, 100 * 100 * 100)
 
 @timeit
 def sliding_window_my_impl(input):
-    sliding_window = SlidingWindowMedian(input, 1000)
+    sliding_window = SlidingWindowMedian(input, 2000)
     i = 0
-    while i < 5000:
+    while i < 2000:
         sliding_window.slide()
         sliding_window.median()
         i += 1
@@ -19,12 +19,12 @@ def sliding_window_my_impl(input):
 
 @timeit
 def sliding_window_bisect(input):
-    sliding_window = SlidingWindowMedian(input, 1000)
+    sliding_window = SlidingWindowMedian(input, 2000)
     i = 0
-    while i < 5000:
+    while i < 2000:
         sliding_window.slide_bisect()
         sliding_window.median()
         i += 1
 
-sliding_window_bisect(input)
+# sliding_window_bisect(input)
 sliding_window_my_impl(input)
