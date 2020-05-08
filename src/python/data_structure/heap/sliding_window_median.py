@@ -39,6 +39,9 @@ class SlidingWindowMedian:
         else:
             return self.current_window[self.window_size >> 1]
 
+    def max(self):
+        return self.current_window[-1]
+
     def init_window(self):
         self.current_window = sorted(self.input_list[self.cur_window_start: self.window_size])
 
