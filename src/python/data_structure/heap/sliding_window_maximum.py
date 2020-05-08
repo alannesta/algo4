@@ -60,6 +60,10 @@ class SlidingWindowMaximum:
             print('end of window')
 
     def _add_to_window(self):
+        if len(self.current_window) == 0:
+            print('end of window')
+            return
+
         if self.cur_window_start + self.window_size <= len(self.input_list) - 1:
             appended = self.input_list[self.cur_window_start + self.window_size]
 
@@ -78,8 +82,6 @@ k = 3
 
 swm = SlidingWindowMaximum(nums, k)
 
-print(swm.max())
-swm.slide()
 print(swm.max())
 swm.slide()
 print(swm.max())
