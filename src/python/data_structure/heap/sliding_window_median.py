@@ -47,8 +47,8 @@ class SlidingWindowMedian:
 
     def slide(self):
         self._remove_from_window(self.input_list[self.cur_window_start])
-        # self._add_to_window(self.input_list[self.cur_window_start + self.window_size])
-        self._add_to_window_binary_search(self.input_list[self.cur_window_start + self.window_size])
+        # self._add_to_window(self.input_list[self.cur_window_start + self.window_size])    # compare via iteration
+        self._add_to_window_binary_search(self.input_list[self.cur_window_start + self.window_size]) # compare via bisect
         self.cur_window_start += 1
 
     def _remove_from_window(self, elem):
