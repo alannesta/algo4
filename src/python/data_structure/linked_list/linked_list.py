@@ -9,16 +9,16 @@ class LinkedList:
         self.head = None
         self.tail = None
 
-    def add_last(self, node):
-        a_node = copy.copy(node)
+    def add_last(self, val):
+        a_node = Node(val=val)
         if not self._is_empty():
             self.tail.next = a_node
             self.tail = a_node
         else:
             self.head = self.tail = a_node
 
-    def add_first(self, node):
-        a_node = copy.copy(node)
+    def add_first(self, val):
+        a_node = Node(val=val)
 
         if not self._is_empty():
             a_node.next = self.head
@@ -26,11 +26,11 @@ class LinkedList:
         else:
             self.head = self.tail = a_node
 
-    def add(self, idx, node):
+    def add(self, idx, val):
+        i_node = Node(val=val)
         if idx == 0:
-            self.add_first(node)
+            self.add_first(i_node)
         else:
-            i_node = copy.copy(node)
             ptr = self.head
             insert_node = None
             cursor = 1
