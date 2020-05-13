@@ -3,7 +3,6 @@ LRU cache implemented via deque, ordered_dict, functools
 """
 from collections import deque, OrderedDict
 from data_structure.linked_list.double_linked_list import DELinkedList
-from functools import lru_cache
 
 class lru:
     def __init__(self, size):
@@ -13,15 +12,20 @@ class lru:
 
     def get(self, key):
         if key in self.cache_lookup:
+            # O(N) operation
             self.cache.remove(key)
             self.cache.appendleft(key)
-        return self.cache_lookup.get(key, None)
+            return self.cache_lookup.get(key, None)
+
+        return None
 
     def set(self, key, value):
         if key in self.cache_lookup:
+            # O(N) operation
             self.cache.remove(key)  # remove from cache deque
             self.cache.appendleft(key)  # add to head
         else:
+            # O(1) operation
             if len(self.cache) >= self.size:
                 del_key = self.cache.pop()    # remove the least frequently used elem from right of queue
                 del self.cache_lookup[del_key]
@@ -41,7 +45,9 @@ class lru_custom_deque:
         if key in self.cache_lookup:
             self.cache.remove_elem(key)
             self.cache.append_left(key)
-        return self.cache_lookup.get(key, None)
+            return self.cache_lookup.get(key, None)
+
+        return None
 
     def set(self, key, value):
         if key in self.cache_lookup:
@@ -57,6 +63,8 @@ class lru_custom_deque:
         self.cache_lookup[key] = value
 
 # OrderedDict impl
+# the inside implementation of ordered dict is a linked list plus a lookup map
+# Performance is similar with the deque + map impl
 class lru_ordered_dict:
     def __init__(self, size):
         self.cache = OrderedDict()
@@ -65,7 +73,9 @@ class lru_ordered_dict:
     def get(self, key):
         if key in self.cache:
             self.cache.move_to_end(key)    # move to the tail
-        return self.cache.get(key, None)
+            return self.cache.get(key, None)
+
+        return None
 
     def set(self, key, value):
         if key in self.cache:
