@@ -1,11 +1,12 @@
 import unittest
-from data_structure.linked_list.lru_cache import lru, lru_ordered_dict
+from data_structure.linked_list.lru_cache import lru, lru_ordered_dict, lru_custom_deque
 
 
 class Test(unittest.TestCase):
     def setUp(self):
         self.lru = lru(5)
         self.lru_od = lru_ordered_dict(5)
+        self.lru_custom = lru_custom_deque(5)
 
     def test_lru_api(self):
         self.lru.set('kaka', 'lala')
@@ -19,15 +20,15 @@ class Test(unittest.TestCase):
 
         self.lru.set('new_key', 'new_val')  # add a new key to the cache
 
-        assert(self.lru.get('gaga') is None)
+        assert (self.lru.get('gaga') is None)
 
-        assert(self.lru.cache[0] == 'new_key')
+        assert (self.lru.cache[0] == 'new_key')
 
         self.lru.get('kaka')
 
-        assert(self.lru.cache[0] == 'kaka')
-        assert(self.lru.cache[4] == 'lala')
-        assert(len(self.lru.cache) == 5)
+        assert (self.lru.cache[0] == 'kaka')
+        assert (self.lru.cache[4] == 'lala')
+        assert (len(self.lru.cache) == 5)
 
     def test_lru_od_api(self):
         self.lru_od.set('kaka', 'lala')
@@ -41,11 +42,33 @@ class Test(unittest.TestCase):
 
         self.lru_od.set('new_key', 'new_val')  # add a new key to the cache
 
-        assert(self.lru_od.get('gaga') is None)
+        assert (self.lru_od.get('gaga') is None)
 
         self.lru_od.get('lala')
         self.lru_od.set('new_key2', 'new_val')
-        assert(self.lru_od.get('haha') is None)
-
+        assert (self.lru_od.get('haha') is None)
 
         print(self.lru_od.cache)
+
+    def test_lru_custom(self):
+        self.lru_custom.set('kaka', 'lala')
+        self.lru_custom.set('gaga', 'kaka')
+        self.lru_custom.set('kaka', 'haha')
+        self.lru_custom.set('lala', 'lala')
+        self.lru_custom.set('haha', 'jaja')
+        self.lru_custom.set('fafa', 'aaaa')
+
+        assert (self.lru_custom.get('kaka') == 'haha')
+
+        self.lru_custom.set('new_key', 'new_val')  # add a new key to the cache
+
+        assert (self.lru_custom.get('gaga') is None)
+
+        assert (self.lru_custom.cache.get(0) == 'new_key')
+
+        self.lru_custom.get('kaka')
+
+        assert (self.lru_custom.cache.get(0) == 'kaka')
+        assert (self.lru_custom.cache.get(4) == 'lala')
+        assert (self.lru_custom.cache.size == 5)
+

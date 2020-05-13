@@ -131,7 +131,7 @@ class DELinkedList:
                 ptr = ptr.next
                 idx -= 1
 
-            prev_node = ptr.prev     # could be None
+            prev_node = ptr.prev  # could be None
             next_node = ptr.next
 
             if prev_node:
@@ -149,7 +149,7 @@ class DELinkedList:
                 ptr = ptr.prev
                 step -= 1
 
-            next_node = ptr.next     # could be None
+            next_node = ptr.next  # could be None
             prev_node = ptr.prev
 
             if next_node:
@@ -161,6 +161,36 @@ class DELinkedList:
                 prev_node.next = None
 
         self.size -= 1
+
+    def remove_elem(self, elem):
+        """
+        remove the first occurrence of an elem
+        :param elem: elem to remove
+        :return: None
+        """
+        ptr = self.head
+        while ptr:
+            if ptr.val == elem:
+                next_node = ptr.next
+                prev_node = ptr.prev
+
+                if prev_node:
+                    prev_node.next = next_node
+                else:
+                    self.head = next_node
+
+                if next_node:
+                    next_node.prev = prev_node
+                else:
+                    self.tail = prev_node
+
+                self.size -= 1
+
+                return
+
+            ptr = ptr.next
+
+        print('element {} not found in the list'.format(elem))
 
     def _is_empty(self):
         return self.head is None or self.tail is None
