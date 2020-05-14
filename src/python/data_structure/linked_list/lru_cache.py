@@ -9,6 +9,7 @@ class lru:
         self.size = size
         self.cache = deque()    # fresh element will be appended to head(left)
         self.cache_lookup = dict()
+        # self.sentinel = object()    # unique object to identify cache miss
 
     def get(self, key):
         if key in self.cache_lookup:
