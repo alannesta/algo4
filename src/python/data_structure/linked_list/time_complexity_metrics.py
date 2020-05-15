@@ -1,5 +1,5 @@
 from util import timeit, generate_random_integer_list
-from data_structure.linked_list.lru_cache import lru_custom_deque, lru, lru_ordered_dict
+from data_structure.linked_list.lru_cache import lru_custom_deque, lru, lru_ordered_dict, lru_final_evolution
 
 cache_size = 1000
 input_range = 10000
@@ -32,6 +32,11 @@ cache3 = lru_custom_deque(cache_size)
 for i in range(0, cache_size):
     cache3.set(rand_input[i], rand_input[i])
 
+cache4 = lru_final_evolution(cache_size)
+for i in range(0, cache_size):
+    cache3.set(rand_input[i], rand_input[i])
+
 test_lru(cache1)
 test_lru(cache2)
 test_lru(cache3)
+test_lru(cache4)

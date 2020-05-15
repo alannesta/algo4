@@ -1,5 +1,5 @@
 import unittest
-from data_structure.linked_list.lru_cache import lru, lru_ordered_dict, lru_custom_deque
+from data_structure.linked_list.lru_cache import lru, lru_ordered_dict, lru_custom_deque, lru_final_evolution
 
 
 class Test(unittest.TestCase):
@@ -7,6 +7,7 @@ class Test(unittest.TestCase):
         self.lru = lru(5)
         self.lru_od = lru_ordered_dict(5)
         self.lru_custom = lru_custom_deque(5)
+        self.lru_fe = lru_final_evolution(5)
 
     def test_lru_api(self):
         self.lru.set('kaka', 'lala')
@@ -72,3 +73,25 @@ class Test(unittest.TestCase):
         assert (self.lru_custom.cache.get(4) == 'lala')
         assert (self.lru_custom.cache.size == 5)
 
+
+    def test_lru_final_evolution(self):
+        self.lru_fe.set('kaka', 'lala')
+        self.lru_fe.set('gaga', 'kaka')
+        self.lru_fe.set('kaka', 'haha')
+        self.lru_fe.set('lala', 'lala')
+        self.lru_fe.set('haha', 'jaja')
+        self.lru_fe.set('fafa', 'aaaa')
+
+        assert (self.lru_fe.get('kaka') == 'haha')
+
+        self.lru_fe.set('new_key', 'new_val')  # add a new key to the cache
+
+        assert (self.lru_fe.get('gaga') is None)
+
+        assert (self.lru_fe.cache.get(0) == ('new_key', 'new_val'))
+
+        self.lru_fe.get('kaka')
+
+        assert (self.lru_fe.cache.get(0) == ('kaka', 'haha'))
+        assert (self.lru_fe.cache.get(4) == ('lala', 'lala'))
+        assert (self.lru_fe.cache.size == 5)

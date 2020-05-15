@@ -10,7 +10,7 @@ class DELinkedList:
         self.size = 0
 
     def append_right(self, val):
-        if not self._is_empty():
+        if self.size > 0:
             node = Node(val=val, prev=self.tail)
             self.tail.next = node
             self.tail = node
@@ -21,7 +21,7 @@ class DELinkedList:
         self.size += 1
 
     def append_left(self, val):
-        if not self._is_empty():
+        if self.size > 0:
             node = Node(val=val, next=self.head)
             self.head.prev = node
             self.head = node
@@ -32,24 +32,30 @@ class DELinkedList:
         self.size += 1
 
     def pop_left(self):
-        if self._is_empty():
+        if self.size == 0:
             return None
 
         poped = self.head
         next_head = self.head.next
-        next_head.prev = None
-        self.head = next_head
+        if next_head:
+            next_head.prev = None
+            self.head = next_head
+        else:
+            self.head = self.tail = None
         self.size -= 1
         return poped
 
     def pop_right(self):
-        if self._is_empty():
+        if self.size == 0:
             return None
 
         poped = self.tail
         next_tail = self.tail.prev
-        next_tail.next = None
-        self.tail = next_tail
+        if next_tail:
+            next_tail.next = None
+            self.tail = next_tail
+        else:
+            self.head = self.tail = None
         self.size -= 1
         return poped
 
@@ -191,6 +197,28 @@ class DELinkedList:
             ptr = ptr.next
 
         print('element {} not found in the list'.format(elem))
+
+    def remove_node(self, node):
+        prev_node = node.prev
+        next_node = node.next
+
+        if prev_node:
+            prev_node.next = next_node
+        else:
+            if next_node:
+                self.head = next_node
+            else:
+                self.head = self.tail = None
+
+        if next_node:
+            next_node.prev = prev_node
+        else:
+            if prev_node:
+                self.tail = prev_node
+            else:
+                self.head = self.tail = None
+
+        self.size -= 1
 
     def _is_empty(self):
         return self.head is None or self.tail is None
