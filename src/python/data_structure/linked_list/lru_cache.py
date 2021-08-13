@@ -6,6 +6,10 @@ from data_structure.linked_list.double_linked_list import DELinkedList, Node
 
 
 class lru:
+    """
+    Not an optimized implementation.
+    The idea is to use a dict(hashmap) for set/get operation, and use a linked list to maintain order (lru) of keys
+    """
     def __init__(self, size):
         self.size = size
         self.cache = deque()  # fresh element will be appended to head(left)
@@ -14,8 +18,7 @@ class lru:
 
     def get(self, key):
         if key in self.cache_lookup:
-            # O(N) operation
-            self.cache.remove(key)
+            self.cache.remove(key)     # this is not optimized, O(N) operation
             self.cache.appendleft(key)
             return self.cache_lookup.get(key, None)
 
@@ -27,9 +30,9 @@ class lru:
             self.cache.remove(key)  # remove from cache deque
             self.cache.appendleft(key)  # add to head
         else:
-            # O(1) operation
             if len(self.cache) >= self.size:
-                del_key = self.cache.pop()  # remove the least frequently used elem from right of queue
+                # remove the least frequently used elem from right of queue
+                del_key = self.cache.pop()  # O(1) operation
                 del self.cache_lookup[del_key]
 
             self.cache.appendleft(key)
@@ -39,7 +42,7 @@ class lru:
 
 class lru_final_evolution:
     """
-    O(1) impl by set Node as value in the look up dict
+    O(1) impl by use a Node{val, prev, next} structure(linked list node) to save value
     """
 
     def __init__(self, size):
