@@ -15,9 +15,9 @@ from copy import copy
 
 # debug helper
 def print_indent(text, level):
-    # indent = level * '  '
-    # print(indent + text)
-    pass
+    indent = level * '  '
+    print(indent + text)
+    # pass
 
 
 # backtracking standard template
@@ -31,23 +31,46 @@ def solution1():
 
         if len(nums) == len(sub_selection) and sorted(sub_selection) not in memo:
             solution.append(copy(sub_selection))
-            memo.append(sorted(sub_selection))
+            memo.append(sorted(copy(sub_selection)))
             return
 
-        sel = copy(sub_selection)
-
         if sorted(sub_selection) not in memo:
-            solution.append(sel)
-            memo.append(sorted(sel))
-        choices = list(set(nums) - set(sel))
+            solution.append(copy(sub_selection))
+            memo.append(sorted(copy(sub_selection)))
+
+        choices = list(set(nums) - set(sub_selection))
 
         for choice in choices:
-            sel.append(choice)
-            walk(nums, sel)
-            sel.remove(choice)
+            sub_selection.append(choice)
+            walk(nums, sub_selection)
+            sub_selection.remove(choice)
 
     print('begin......')
     walk([1, 2, 3], [])
+    print(solution)
+
+
+# 数学归纳法, explainable solution
+def solution2():
+    solution = []
+
+    def walk(nums):
+        if len(nums) == 0:
+            solution.append([])
+            return [[]]
+
+        elem = nums.pop()
+        subs = walk(nums)
+
+        for i in range(len(subs)):
+            solution.append(subs[i] + [elem])
+            subs.append(subs[i] + [elem])
+
+        return subs
+
+    result = walk([1, 2, 3])
+
+    print(result)
     print(solution)
 
 
@@ -56,42 +79,20 @@ def solution3():
     solution = []
 
     def walk(nums, selection, idx):
-        sel = copy(selection)
-        solution.append(selection)
+        solution.append(copy(selection))
 
         if idx == len(nums):
             return
 
-        # sel = copy(selection)
-
         for i in range(idx, len(nums)):
-            sel.append(nums[i])
-            walk(nums, sel, i + 1)
-            sel.pop()
+            selection.append(nums[i])
+            walk(nums, selection, i + 1)
+            selection.pop()
 
     walk([1, 2, 3], [], 0)
     print(solution)
 
 
-def subsets():
-    result = []
-
-    def backtrack(nums, start, path):
-        result.append(path[:])
-
-        if start == len(nums):
-            return
-
-        for i in range(start, len(nums)):
-            path.append(nums[i])
-            backtrack(nums, i + 1, path)
-            path.pop()
-
-    backtrack([1, 2, 3], 0, [])
-
-    print(result)
-
-
 # solution1()
-solution3()
-subsets()
+solution2()
+# solution3()
