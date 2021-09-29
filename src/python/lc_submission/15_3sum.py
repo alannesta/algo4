@@ -237,7 +237,7 @@ input_ = [82597, -9243, 62390, 83030, -97960, -26521, -61011, 83390, -38677, 123
 
 # debug helper
 def print_indent(text, level):
-    indent = level * '  '
+    indent = level * '    '
     print(indent + text)
     # pass
 
@@ -295,7 +295,26 @@ def solution_three_sum():
             walk(nums, path, i + 1)
             path.pop()
 
-    walk(input_, [], 0)
+    walk([-1, 0, 1, 2, -1, -4], [], 0)
+    print(solution)
+
+
+def solution_three_sum_v2():
+    solution = []
+    memo = {}
+    target = 0
+
+    def walk(nums):
+        for i in range(len(nums)):
+            pairs = two_sum(nums[i + 1:], target - nums[i])
+            if pairs:
+                for p in pairs:
+                    s_t = tuple(sorted(p + [nums[i]]))
+                    if s_t not in memo:
+                        solution.append(p + [nums[i]])
+                        memo[s_t] = True
+
+    walk(input_)
     print(solution)
 
 
@@ -332,7 +351,8 @@ def solution_n_sum():
     print(answer)
 
 
-solution1()
+# solution1()
 # solution_two_sum()
 # solution_n_sum()
-# solution_three_sum()
+solution_three_sum()
+# solution_three_sum_v2()
