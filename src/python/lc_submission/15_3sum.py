@@ -327,9 +327,9 @@ def solution_n_sum():
     answer = []
     memo = []
 
-    def n_sum(nums, n, target, path):
+    def n_sum(nums, n, target, path, start_pos):
         if n == 2:
-            pairs = two_sum(nums, target)
+            pairs = two_sum(nums[start_pos:], target)
             for pair in pairs:
                 for i in range(len(path)):
                     pair.append(path[i])
@@ -338,21 +338,19 @@ def solution_n_sum():
                     memo.append(sorted(copy(pair)))
             return
 
-        for i in range(len(nums)):
+        for i in range(start_pos, len(nums)):
             path.append(nums[i])
-            removed = nums.pop(i)
-            n_sum(nums, n - 1, target - removed, path)
-            nums.insert(i, removed)
+            n_sum(nums, n - 1, target - nums[i], path, i + 1)
             path.pop()
 
-    nums = [-1, 0, 1, -2, 5, -1, 6, -4]
-    n_sum(nums, 3, 0, [])
+    nums = [1, 0, -1, 0, -2, 2]
+    n_sum(nums, 4, 0, [], 0)
 
     print(answer)
 
 
 # solution1()
 # solution_two_sum()
-# solution_n_sum()
-solution_three_sum()
+solution_n_sum()
+# solution_three_sum()
 # solution_three_sum_v2()
