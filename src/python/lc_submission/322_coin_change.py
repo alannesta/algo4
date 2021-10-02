@@ -14,6 +14,7 @@ Input: coins = [1,2,5], amount = 11
 Output: 3
 Explanation: 11 = 5 + 5 + 1
 """
+from collections import deque
 
 
 # standard DP solution
@@ -70,5 +71,33 @@ def solution2():
     print(walk(c, [], amount))
 
 
+# solution3 BFS
+def solution3():
+    queue = deque()
+    visited = set()
+    coins = [1, 2, 5]
+    amount = 11
+    step = 0
+
+    queue.appendleft(amount)
+
+    while queue:
+        for i in range(len(queue)):
+            target = queue.pop()
+            if target == 0:
+                return step
+
+            for coin in coins:
+                new_target = target - coin
+                if new_target >= 0 and new_target not in visited:
+                    visited.add(new_target)
+                    queue.appendleft(new_target)
+
+        step = step + 1
+
+    return -1
+
 # solution1()
-solution2()
+# solution2()
+
+print(solution3())
