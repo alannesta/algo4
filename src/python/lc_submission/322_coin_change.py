@@ -22,20 +22,22 @@ def solution1():
     def coinChange(coins, amount):
         dp = [-1] * (amount + 1)
 
-        dp[0] = 0
         for i in range(amount + 1):
+            if i == 0:
+                dp[i] = 0
+                continue
             for c in coins:
                 if i - c < 0:
                     continue
-                else:
-                    if dp[i - c] == -1:
-                        continue
-                    else:
+                if dp[i - c] != -1:
+                    if dp[i] == -1:
                         dp[i] = dp[i - c] + 1
+                    else:
+                        dp[i] = min(dp[i], dp[i - c] + 1)
 
-        print(dp)
+        return dp[amount]
 
-    coinChange([1, 2, 5], 11)
+    print(coinChange([1, 2, 5], 11))
 
 
 # backtracking, exceeds time limit even with memo
@@ -97,7 +99,7 @@ def solution3():
 
     return -1
 
-# solution1()
+solution1()
 # solution2()
-
-print(solution3())
+#
+# print(solution3())
