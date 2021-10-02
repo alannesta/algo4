@@ -73,7 +73,7 @@ def solution2():
     print(walk(c, [], amount))
 
 
-# solution3 BFS
+# solution3 BFS (faster than dp solution)
 def solution3():
     queue = deque()
     visited = set()
