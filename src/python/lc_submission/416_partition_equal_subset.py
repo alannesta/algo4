@@ -11,6 +11,7 @@ Explanation: The array can be partitioned as [1, 5, 5] and [11].
 """
 
 
+# brute force v1, will exceed time limit
 def solution():
     n = [1, 5, 11, 5, 2]
     memo = {}
@@ -36,4 +37,38 @@ def solution():
     return partition(nums, 0)
 
 
-print(solution())
+# brute force v2: convert to combination sum
+def solution2():
+    pass
+
+
+# convert to dp[knapsack problem], find if there are items that sum up to sum(nums)/2
+def solution3():
+    n = [1, 5, 11, 5]
+    if sum(n) % 2 == 1:
+        return False
+    total = sum(n) // 2
+
+    l = total + 1
+    dp = []
+    for i in range(len(n) + 1):
+        tmp = []
+        for j in range(l):
+            tmp.append(False)
+        dp.append(tmp)
+
+    dp[0][0] = True
+    for j in range(len(n) + 1):
+        for i in range(l):
+            if i == 0 or j == 0:
+                continue
+
+            if i - n[j - 1] < 0:
+                dp[j][i] = dp[j - 1][i]
+            else:
+                dp[j][i] = dp[j - 1][i - n[j - 1]] or dp[j - 1][i]
+
+    print(dp)
+
+
+solution3()

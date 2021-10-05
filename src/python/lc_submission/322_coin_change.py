@@ -1,4 +1,5 @@
 """
+https://leetcode.com/problems/coin-change/
 You are given an integer array coins representing coins of different denominations and
 an integer amount representing a total amount of money.
 
@@ -14,13 +15,16 @@ Input: coins = [1,2,5], amount = 11
 Output: 3
 Explanation: 11 = 5 + 5 + 1
 """
+import sys
 from collections import deque
 
 
-# standard DP solution
-def solution1():
+# DP solution, one dimension
+def solution1_a():
     def coinChange(coins, amount):
-        dp = [-1] * (amount + 1)
+        dp = []
+        for i in range(amount + 1):
+            dp.append(-1)
 
         for i in range(amount + 1):
             if i == 0:
@@ -36,6 +40,60 @@ def solution1():
                         dp[i] = min(dp[i], dp[i - c] + 1)
 
         return dp[amount]
+
+    print(coinChange([1, 2, 5], 11))
+
+
+# DP solution, two dimension state(knapsack template)
+def solution1_b():
+    def coinChange(coins, amount):
+        d_amount = amount + 1
+        d_coin = len(coins) + 1
+
+        dp = []
+
+        for i in range(d_coin):
+            tmp = []
+            for j in range(d_amount):
+                if j == 0:
+                    tmp.append(0)  # initialize state, when amount is 0, 0 coins is required
+                else:
+                    tmp.append(-1)  # -1 stands for no solution
+
+            dp.append(tmp)
+
+        # loop order is different from above
+        # we derive state by "column", not by "row"
+        for j in range(d_amount):
+            for i in range(d_coin):
+                if i == 0:
+                    continue
+                if j - coins[i - 1] < 0:  # compensate for index offset
+                    dp[i][j] = dp[i - 1][j]
+                else:
+                    if dp[i - 1][j] == -1:
+                        if dp[i][j - coins[i - 1]] == -1:
+                            dp[i][j] = -1
+                        else:
+                            dp[i][j] = dp[i][j - coins[i - 1]] + 1
+                    else:
+                        if dp[i][j - coins[i - 1]] == -1:
+                            dp[i][j] = dp[i - 1][j]
+                        else:
+                            dp[i][j] = min(dp[i][j - coins[i - 1]] + 1, dp[i - 1][j])
+
+        min_c = sys.maxsize
+
+        for i in range(1, d_coin):
+            if dp[i][amount] == -1:
+                continue
+            if dp[i][amount] < min_c:
+                min_c = dp[i][amount]
+
+        if min_c == sys.maxsize:
+            return -1
+
+        return min_c
 
     print(coinChange([1, 2, 5], 11))
 
@@ -99,7 +157,9 @@ def solution3():
 
     return -1
 
-solution1()
+
+# solution1_a()
+solution1_b()
 # solution2()
-#
+
 # print(solution3())
