@@ -21,7 +21,9 @@ def solution():
     nums = [2, 7, 9, 3, 1]
     m_amount = -1
 
-    dp = [-1] * (len(nums) + 1)
+    dp = []
+    for i in range(len(nums) + 1):
+        dp.append(-1)
 
     for i in range(len(nums) + 1):
         if i == 0:
@@ -33,6 +35,4 @@ def solution():
         if dp[i] > m_amount:
             m_amount = dp[i]
 
-    print(dp)
     return m_amount
-
