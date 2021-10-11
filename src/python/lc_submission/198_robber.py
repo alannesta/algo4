@@ -16,6 +16,7 @@ Total amount you can rob = 1 + 3 = 4.
 """
 
 
+# dp
 def solution():
     # nums = [1, 2, 3, 1]
     nums = [2, 7, 9, 3, 1]
@@ -36,3 +37,34 @@ def solution():
             m_amount = dp[i]
 
     return m_amount
+
+
+# recursion
+def solution2():
+    nums = [2, 7, 9, 3, 1]
+    memo = {}
+
+    def walk(i):
+        if i in memo:
+            return memo[i]
+
+        # edge case is tricky
+        if i == 0:
+            memo[i] = nums[0]
+            return nums[0]
+        if i < 0:
+            return 0
+
+        val1 = walk(i - 1)
+        val2 = walk(i - 2)
+
+        memo[i - 1] = val1
+        memo[i - 2] = val2
+
+        return max(val1, val2 + nums[i])
+
+    return walk(len(nums) - 1)
+
+
+print(solution2())
+print(solution())

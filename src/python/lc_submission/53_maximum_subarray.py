@@ -62,5 +62,32 @@ def solution2():
     return max_s, pos
 
 
+# recursion
+def solution3():
+    n = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+    max_s = -sys.maxsize
+
+    def walk(i, nums):
+        nonlocal max_s
+        if i == 0:
+            if nums[0] > max_s:
+                max_s = nums[0]
+            return nums[0]
+
+        res = walk(i - 1, nums)
+
+        cur = max(nums[i] + res, nums[i])
+
+        if cur > max_s:
+            max_s = cur
+
+        return cur
+
+    walk(len(n) - 1, n)
+
+    return max_s
+
+
 # solution()
-print(solution2())
+# print(solution2())
+print(solution3())
