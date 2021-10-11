@@ -23,6 +23,7 @@ Explanation: The longest common subsequence is "ace" and its length is 3.
 """
 
 
+# dp
 def lcs(s1, s2):
     len1 = len(s1)
     len2 = len(s2)
@@ -49,4 +50,31 @@ def lcs(s1, s2):
     return dp[len2][len1]
 
 
-print(lcs('abcde', 'ace'))
+# recursion
+def solution2():
+    str1 = 'abcde'
+    str2 = 'ace'
+
+    memo = {}
+
+    def walk(i, j):
+
+        if (i, j) in memo:
+            return memo[(i, j)]
+
+        # base case
+        if i == -1 or j == -1:
+            return 0
+
+        if str1[i] == str2[j]:
+            memo[(i, j)] = walk(i - 1, j - 1) + 1
+            return memo[(i, j)]
+        else:
+            memo[(i, j)] = max(walk(i, j - 1), walk(i - 1, j))
+            return memo[(i, j)]
+
+    return walk(len(str1) - 1, len(str2) - 1)
+
+
+# print(lcs('abcde', 'ace'))
+print(solution2())
