@@ -1,3 +1,5 @@
+from .utils import deserialize, drawtree, serialize
+
 """
 https://leetcode.com/problems/flatten-binary-tree-to-linked-list/
 
@@ -46,5 +48,10 @@ class Solution:
         ptr.right = right_ptr
 
 
+# test case:
+# usage: python3 -m tree.114_flatten_tree_node
 
+input = "[1,2,5,3,4,null,6]"
+root_node = deserialize(input)
 
+print(serialize(root_node))
