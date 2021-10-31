@@ -18,7 +18,9 @@ class lru:
 
     def get(self, key):
         if key in self.cache_lookup:
-            self.cache.remove(key)     # this is not optimized, O(N) operation
+            # first remove the key, then add the key to the left most pos
+            # this is not optimized, O(N) operation
+            self.cache.remove(key)
             self.cache.appendleft(key)
             return self.cache_lookup.get(key, None)
 
@@ -40,9 +42,10 @@ class lru:
         self.cache_lookup[key] = value
 
 
-class lru_final_evolution:
+class lru_v2:
     """
-    O(1) impl by use a Node{val, prev, next} structure(linked list node) to save value
+    double linked list solution
+    O(1) impl by using a Node{val, prev, next} structure(linked list node) to save value
     """
 
     def __init__(self, size):
