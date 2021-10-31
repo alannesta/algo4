@@ -1,9 +1,12 @@
 """
-double linked list aka deque impl
+double ended linked list aka deque impl
 """
 
 
 class DELinkedList:
+    """
+    double ended linked list
+    """
     def __init__(self):
         self.head = None
         self.tail = None
@@ -125,6 +128,11 @@ class DELinkedList:
             return ptr.val
 
     def remove(self, idx):
+        """
+        remove elem by index
+        :param idx:
+        :return:
+        """
         if idx > self.size - 1 or idx < 0:
             raise IndexError('index: {} out of range'.format(idx))
 
@@ -170,8 +178,8 @@ class DELinkedList:
 
     def remove_elem(self, elem):
         """
-        remove the first occurrence of an elem
-        :param elem: elem to remove
+        remove the first occurrence of an value (node value)
+        :param elem: value to remove
         :return: None
         """
         ptr = self.head
@@ -198,7 +206,12 @@ class DELinkedList:
 
         print('element {} not found in the list'.format(elem))
 
-    def remove_node(self, node):
+    def remove_node(self, node: None):
+        """
+        remove a node
+        :param node:
+        :return:
+        """
         prev_node = node.prev
         next_node = node.next
 

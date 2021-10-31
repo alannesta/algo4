@@ -26,13 +26,70 @@ from collections import deque
 
 
 class CacheNode:
-    def __init__(self, key, val, freq):
+    def __init__(self, key, val, freq, prev=None, next=None):
         self.key = key
         self.val = val
         self.freq = freq
+        self.prev = prev
+        self.next = next
 
     def __repr__(self):
         return f'[{self.key}: {self.val}]'
+
+
+class LinkedList:
+    """
+    double linked list which supports add/remove nodes from both ends
+    """
+
+    def __init__(self):
+        self.head = CacheNode(key=None, val=None, freq=None)
+        self.tail = CacheNode(key=None, val=None, freq=None, prev=self.head)
+
+        self.head.next = self.tail
+        self.size = 0
+
+    def appendleft(self, node: CacheNode):
+        cur_head = self.head.next
+
+        self.head.next = node
+        cur_head.prev = node
+
+        node.prev = self.head
+        node.next = cur_head
+
+        self.size += 1
+
+    def pop(self):
+        if self.size == 0:
+            raise IndexError
+
+        cur_tail = self.tail.prev
+        cur_tail_prev = cur_tail.prev
+
+        cur_tail_prev.next = self.tail
+        self.tail.prev = cur_tail_prev
+
+        # cur_tail.prev = None
+        # cur_tail.next = None
+
+        self.size -= 1
+
+        return cur_tail
+
+
+    def remove(self, node: CacheNode):
+        prev_node = node.prev
+        next_node = node.next
+
+        prev_node.next = next_node
+        next_node.prev = prev_node
+
+        self.size -= 1
+
+
+    def __len__(self):
+        return self.size
 
 
 class LFUCache:
@@ -40,7 +97,7 @@ class LFUCache:
     def __init__(self, capacity: int):
         self.cache_lookup = {}
         self.freq_lookup = {
-            0: deque()
+            0: LinkedList()
         }
         self.current_cap = 0
         self.capacity = capacity
@@ -74,7 +131,6 @@ class LFUCache:
             cur_freq = cache_node.freq
             self.freq_lookup[cur_freq].remove(cache_node)  # deque remove api
 
-
             # update key, update freq
             cache_node.freq = cur_freq + 1
             cache_node.val = value
@@ -94,8 +150,7 @@ class LFUCache:
                 self.cache_lookup[key] = new_node
                 self._add_to_freq_map(new_node)
 
-                if self.lowest_freq > new_node.freq or self.lowest_freq == 0:
-                    self.lowest_freq = new_node.freq
+                self.lowest_freq = 1
 
                 self.current_cap += 1
 
@@ -107,23 +162,18 @@ class LFUCache:
                     return
                 self.cache_lookup.pop(node_to_remove.key)
 
-                if len(self.freq_lookup[self.lowest_freq]) == 0:
-                    self.lowest_freq += 1
-
                 # add key
                 self.cache_lookup[key] = new_node
                 self._add_to_freq_map(new_node)
 
-                if self.lowest_freq > new_node.freq:
-                    self.lowest_freq = new_node.freq
+                self.lowest_freq = 1
 
     def _add_to_freq_map(self, cache_node):
         if cache_node.freq in self.freq_lookup:
             self.freq_lookup[cache_node.freq].appendleft(cache_node)
         else:
-            self.freq_lookup[cache_node.freq] = deque()
+            self.freq_lookup[cache_node.freq] = LinkedList()
             self.freq_lookup[cache_node.freq].appendleft(cache_node)
-
 
 # lfu = LFUCache(2)
 # lfu.put(3, 1)
