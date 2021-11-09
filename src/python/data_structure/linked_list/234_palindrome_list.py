@@ -45,6 +45,11 @@ class Solution:
         return True
 
     def reverse(self, head_node) -> Optional[ListNode]:
+        """
+        reverse linked list (non-recursive)
+        :param head_node:
+        :return:
+        """
         if not head_node:
             return None
 
