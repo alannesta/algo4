@@ -41,18 +41,23 @@ class Solution:
         while start:
             # peek: increase the counter first
             cnt = cnt + 1
+
+            if cnt < left:
+                start = start.next
+                continue
+
             if cnt == left:
                 left_ptr = start
 
-            start = start.next
-
             if cnt == right:
+                start = start.next
                 stack.append(start)
                 right_ptr = start.next
                 break
 
-            if cnt >= left:
-                stack.append(start)
+            start = start.next
+            # add to stack
+            stack.append(start)
 
         while stack:
             node = stack.pop()
@@ -91,8 +96,9 @@ class Solution:
                 reverse_head = start.next
 
             elif cnt == right:
-                # reverse_tail = start.next
-                next_n = start.next.next if start.next else None
+                reverse_tail = start.next
+                next_n = reverse_tail.next
+                reverse_tail.next = None  # set reverse_tail.next to None
 
             start = start.next
 
@@ -123,4 +129,3 @@ class Solution:
             cur = next_node
 
         return prev
-
