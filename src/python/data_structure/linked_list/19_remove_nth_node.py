@@ -30,6 +30,7 @@ class Solution:
             ptr1 = ptr1.next
 
             counter = counter + 1
+            # when to move ptr2? avoid off by one error by drawing on paper
             if counter >= n:
                 prev = ptr2
                 ptr2 = ptr2.next
