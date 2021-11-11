@@ -22,24 +22,52 @@ class TreeNode:
 
 
 class Solution:
-    def isValidBST(self, root: Optional[TreeNode]) -> bool:
-        self.validate(root, root)
+    def __init__(self):
+        self.prev = None
+        self.invalid = False   # marker to stop recursion early
 
-    def validate(self, node, parent) -> bool:
-        if not node.left and not node.right:
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        # return self.validate(root, None, None)
+        return self.validate_v2(root)
+
+    def validate(self, node, min_val, max_val) -> bool:
+        if not node:
             return True
 
-        valid_left = valid_right = True
+        if max_val and node.val >= max_val.val:
+            return False
 
-        if node.left:
-            if node.left.val > node.val or node.left.val > parent.val:
+        if min_val and node.val <= min_val.val:
+            return False
+
+        return self.validate(node.left, min_val, node) and self.validate(node.right, node, max_val)
+
+    def validate_v2(self, node) -> bool:
+        """
+        using in-order traversal.
+        利用二叉树in-order traversal是升序遍历的性质, 引入一个额外的变量记录前值
+        这个解法更容易理解
+        :param node:
+        :return:
+        """
+
+        if not node:
+            return True
+
+        if self.invalid:
+            return False
+
+        valid_l = self.validate_v2(node.left)
+
+        if not self.prev:
+            self.prev = node
+        else:
+            if node.val <= self.prev.val:
+                self.invalid = True
                 return False
+            else:
+                self.prev = node
 
-            valid_left = self.validate(node.left, node)
+        valid_r = self.validate_v2(node.right)
 
-        if node.right:
-            if node.right.val < node.val or node.node.val < parent.val:
-                return False
-            valid_right = self.validate(node.right, node)
-
-        return valid_left and valid_right
+        return valid_l and valid_r
