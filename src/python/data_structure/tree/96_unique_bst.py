@@ -61,13 +61,16 @@ class Solution2:
         # return self.trees
 
     def construct(self, arr: List[int]) -> Optional[List[TreeNode]]:
+        trees = []
+
         if not arr:
-            return None
+            # this will greatly simplify if checks
+            trees.append(None)
+            return trees
 
         if tuple(arr) in self.memo:
             return self.memo[tuple(arr)]
 
-        trees = []
 
         for idx, elem in enumerate(arr):
 
@@ -77,21 +80,22 @@ class Solution2:
             self.memo[tuple(arr[:idx])] = left_nodes
             self.memo[tuple(arr[idx + 1:])] = right_nodes
 
-            if not left_nodes and not right_nodes:
-                root = TreeNode(val=elem)
-                trees.append(root)
-
-            if not left_nodes and right_nodes:
-                for rn in right_nodes:
-                    root = TreeNode(val=elem, left=None)
-                    root.right = rn
-                    trees.append(root)
-
-            if not right_nodes and left_nodes:
-                for ln in left_nodes:
-                    root = TreeNode(val=elem, right=None)
-                    root.left = ln
-                    trees.append(root)
+            # if checks that could be simplified via smarter return value
+            # if not left_nodes and not right_nodes:
+            #     root = TreeNode(val=elem)
+            #     trees.append(root)
+            #
+            # if not left_nodes and right_nodes:
+            #     for rn in right_nodes:
+            #         root = TreeNode(val=elem, left=None)
+            #         root.right = rn
+            #         trees.append(root)
+            #
+            # if not right_nodes and left_nodes:
+            #     for ln in left_nodes:
+            #         root = TreeNode(val=elem, right=None)
+            #         root.left = ln
+            #         trees.append(root)
 
             if left_nodes and right_nodes:
                 for ln in left_nodes:
