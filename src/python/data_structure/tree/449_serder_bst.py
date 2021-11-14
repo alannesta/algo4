@@ -50,7 +50,7 @@ class Codec:
 
     def deserialize(self, data: str) -> TreeNode:
         """
-        deserialize
+        deserialize, O(N)
         """
 
         data = data.split(',')
@@ -98,7 +98,7 @@ class Codec:
 
     def deserialize_v2(self, data: str) -> Optional[TreeNode]:
         """
-        deserialize, level-order traversal
+        deserialize, level-order traversal, O(N)
         """
 
         data = data.split(',')

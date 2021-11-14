@@ -25,8 +25,7 @@ class Solution:
         if not node:
             return
 
-        self.traverse(node.left)
         self.traverse(node.right)
-
         self.sum += node.val
         node.val = self.sum
+        self.traverse(node.left)
