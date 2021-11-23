@@ -55,7 +55,7 @@ class Solution:
 
     def maxSlidingWindow_v2(self, nums: List[int], k: int) -> List[int]:
         """
-        O(N) solution, using
+        O(N) solution, using mono queue
         :param nums:
         :param k:
         :return:
