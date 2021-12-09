@@ -3,7 +3,7 @@
 """
 import random
 from typing import List
-
+import bisect
 
 # 380: https://leetcode.com/problems/insert-delete-getrandom-o1/submissions/
 # 此题有单独的submission file
@@ -58,3 +58,44 @@ class Solution710:
             return self.look_up[idx]
         else:
             return idx
+
+
+# 528: https://leetcode.com/problems/random-pick-with-weight/
+class Solution528:
+
+    def __init__(self, w: List[int]):
+        self.w = w
+        self.weighted = [-1] * len(w)
+        for idx, item in enumerate(w):
+            if idx == 0:
+                self.weighted[idx] = item
+            else:
+                self.weighted[idx] = self.weighted[idx - 1] + item
+
+        # print(weighted)
+
+    def pickIndex(self) -> int:
+        random_val = random.randint(1, self.weighted[-1])
+
+        # picked = bisect.bisect_left(self.weighted, random_val)
+
+
+        # bisect.bisect_left impl:
+        left = 0
+        right = len(self.weighted)
+
+        while left < right:
+            mid = (left + right) // 2
+
+            if self.weighted[mid] < random_val:
+                left = mid + 1
+
+            elif self.weighted[mid] > random_val:
+                right = mid
+
+            elif self.weighted[mid] == random_val:
+                right = mid
+
+        return left
+
+# sol = Solution528([1, 3, 5, 7])
