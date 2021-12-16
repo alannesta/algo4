@@ -93,3 +93,9 @@ class Solution1288:
                     removed[i] = True
 
         return len(intervals) - len(removed.keys())
+
+
+# 253 meeting rooms II
+# https://ttzztt.gitbooks.io/lc/content/heap/meeting-room.html
+# 使用priority queue求解
+# https://www.youtube.com/watch?v=4MEkBvqE_2Q&ab_channel=%E5%B1%B1%E6%99%AF%E5%9F%8E%E4%B8%80%E5%A7%90
