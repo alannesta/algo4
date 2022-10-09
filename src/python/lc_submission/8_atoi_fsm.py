@@ -10,6 +10,7 @@ SIGN = ('+', '-')
 INT_RANGE = (-2 ** 31, 2 ** 31 - 1)
 
 
+# State machine solution
 class FSM:
     def __init__(self, str_input):
         self.str_input = str_input
@@ -45,6 +46,7 @@ class FSM:
 
         # leetcode edge case, for any other state, return 0
         return 0
+
 
 class State(ABC):
     def __init__(self, sign, parsed):
