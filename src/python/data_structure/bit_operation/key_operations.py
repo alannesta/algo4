@@ -46,5 +46,17 @@ chr: Return the string representing a character whose Unicode code point is the 
 
 check if a certain bit is set(by pos):
 
+# bit length and to_bytes
+>>> kaka = 4
+>>> kaka.bit_length()   # not 32bit!!
+3
+>>> lala = kaka.to_bytes(4, byteorder='big')
+b'\x00\x00\x00\x04'
+>>> kaka.to_bytes(4, byteorder='little')
+b'\x04\x00\x00\x00'
 
+>>> int.from_bytes(lala, byteorder='big')
+4
+>>> int.from_bytes(lala, byteorder='little')
+67108864
 """
