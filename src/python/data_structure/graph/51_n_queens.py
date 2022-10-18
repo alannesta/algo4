@@ -13,6 +13,7 @@ class Solution:
 
     def solveNQueens(self, n: int) -> List[List[str]]:
         board = self.init_board(n)
+        # backtrack如何kick start需要总结一下
         self.place_queen(board, 0)  # starting from first row
         return self.all_boards
 
