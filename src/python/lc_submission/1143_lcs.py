@@ -28,6 +28,7 @@ def lcs(s1, s2):
     len1 = len(s1)
     len2 = len(s2)
     dp = []
+    # 二维数组初始化的套路
     for i in range(len2 + 1):
         temp = []
         for j in range(len1 + 1):
