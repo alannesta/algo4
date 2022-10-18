@@ -58,7 +58,7 @@ class Solution:
                 self.place_queen(board, row_idx + 1)
                 # backtrack
                 row[col] = '.'
-            # not valid, move on to next col
+            # not valid, move on to next col, return None
 
     # check if placing on (row, col) is a valid solution
     def is_valid(self, board, row_idx, col_idx) -> bool:
