@@ -74,3 +74,32 @@ def solution2():
 
 # solution()
 solution2()
+
+from typing import List
+
+
+# 2022.10.19 更新: 不需要memo的解法:
+class Solution:
+    def __init__(self):
+        self.result = []
+
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+
+        self.traverse(candidates, 0, target=target, cur_path=[])
+        return self.result
+
+    def traverse(self, nums, start_idx, target, cur_path):
+        if start_idx >= len(nums):
+            return
+
+        if target == 0:
+            self.result.append(cur_path[::])  # copy of cur_path
+            return
+
+        if target < 0:
+            return
+
+        for idx in range(start_idx, len(nums)):
+            cur_path.append(nums[idx])
+            self.traverse(nums, idx, target - nums[idx], cur_path)  # 选取重复元素的关键点: start_pos idx不要+1
+            cur_path.pop()

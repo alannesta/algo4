@@ -27,7 +27,7 @@ class Solution:
             return
 
         for i in range(3):
-            chars = ip_str[0: i + 1]
+            chars = ip_str[0: i + 1]  # python string slice do not have idx out of range issue
             if self.is_valid_segment(chars):
                 cur_path.append(chars)
                 self.traverse(ip_str[i + 1:], segment - 1, cur_path)

@@ -48,3 +48,30 @@ def solution1():
 
 
 solution1()
+
+
+from typing import List
+
+# 2022.10.19 update
+# use start_idx to avoid using memo, 脑子里要有search的画面
+class Solution:
+    def __init__(self):
+        self.result = []
+
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        nums = [i for i in range(1, n + 1)]
+        self.traverse(nums, 0, k, cur_path=[])
+        return self.result
+
+    def traverse(self, nums, start_idx, k, cur_path):
+        if len(cur_path) == k:
+            self.result.append(cur_path[::])    # copy of cur_path
+            return
+
+        if start_idx >= len(nums):
+            return
+
+        for idx in range(start_idx, len(nums)):
+            cur_path.append(nums[idx])
+            self.traverse(nums, idx + 1, k, cur_path)
+            cur_path.pop()
