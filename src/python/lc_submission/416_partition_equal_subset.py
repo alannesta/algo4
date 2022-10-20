@@ -72,3 +72,43 @@ def solution3():
 
 
 solution3()
+
+from typing import List
+# 2022.10.19 update: 虽然依然会超时, 但是应该是回溯的最优写法了
+class Solution:
+    def __init__(self):
+        self.total = None
+        self.visited = {}
+
+    def canPartition(self, nums: List[int]) -> bool:
+        # nums.sort()
+        self.total = sum(nums)
+        if sum(nums) % 2 != 0:
+            return False
+        return self.traverse(nums, 0, cur_idx=[])
+
+    def traverse(self, nums, idx, cur_idx):
+        key = tuple(sorted(cur_idx))
+        if key in self.visited:
+            return False
+        else:
+            self.visited[key] = True
+
+        if idx >= len(nums):
+            return False
+
+        cur_sum = sum(cur_idx)
+
+        if cur_sum == self.total / 2:
+            return True
+
+        if cur_sum > self.total / 2:
+            return False
+
+        for i in range(idx, len(nums)):
+            cur_idx.append(nums[i])
+            if self.traverse(nums, i + 1, cur_idx):
+                return True
+            cur_idx.pop()
+
+        return False

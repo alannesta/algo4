@@ -73,7 +73,7 @@ def solution2():
 
 
 # solution()
-solution2()
+# solution2()
 
 from typing import List
 
@@ -103,3 +103,50 @@ class Solution:
             cur_path.append(nums[idx])
             self.traverse(nums, idx, target - nums[idx], cur_path)  # 选取重复元素的关键点: start_pos idx不要+1
             cur_path.pop()
+
+# lc40: combination sumII
+class Solution2:
+    def __init__(self):
+        self.result = []
+        self.memo = {}
+        self.iter = 0
+
+    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+        self.traverse(candidates, 0, target=target, cur_path=[])
+        return self.result
+
+    def traverse(self, nums, start_idx, target, cur_path):
+        # 这道题目memo的设计是关键
+        # 因为只需要找到不重复的subset, 所以memo的check可以放在这里
+        # 后面如果有和nums[0]重复的元素, 其后面的search都可以skip, 因为first pass会穷尽其所有的可能性
+
+        # key = "".join(map(lambda x: str(x), sorted(cur_path)))
+        key = tuple(sorted(cur_path))
+        # why we need to check memo here?
+        # will there be duplicates?
+        if key in self.memo:
+            return
+        else:
+            self.memo[key] = True
+
+        if target == 0:
+            # self.memo[key] = True
+            self.result.append(cur_path[::])  # copy of cur_path
+            return
+
+        if target < 0:
+            return
+
+        self.iter += 1
+
+        for idx in range(start_idx, len(nums)):
+            cur_path.append(nums[idx])
+            self.traverse(nums, idx + 1, target - nums[idx], cur_path)
+            cur_path.pop()
+
+
+input = [1, 1, 1, 2, 3, 1, 1]
+
+sol = Solution2()
+print(sol.combinationSum2(input, target=5))
+print(sol.iter)
