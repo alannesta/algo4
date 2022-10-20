@@ -29,15 +29,16 @@ class Solution:
                 cur_partition.pop()
 
     def is_valid(self, str):
-        if not str:
-            return False
-        if len(str) == 1:
-            return True
+        i = 0
+        j = len(str) - 1
 
-        if str == str[::-1]:
-            return True
+        while i <= j:
+            if str[i] != str[j]:
+                return False
+            i += 1
+            j -= 1
 
-        return False
+        return True
 
 
 input = "aab"
