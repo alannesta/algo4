@@ -14,7 +14,6 @@ class Solution:
             else:
                 tmp = deque()
                 digits = deque()
-                flat = ''
                 while stack[-1] != '[':
                     char = stack.pop()
                     tmp.appendleft(char)
