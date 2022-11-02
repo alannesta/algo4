@@ -405,3 +405,29 @@ class Solution:
             look_up[char] -= 1
 
         return ''.join(result)
+
+    # 209: https://leetcode.com/problems/minimum-size-subarray-sum/
+    def minSubArrayLen(self, target: int, nums: List[int]) -> int:
+        left = right = 0
+        cur_sum = 0
+        min_length = 2 ** 31 - 1
+
+        while right < len(nums):
+            cur_sum += nums[right]
+
+            if cur_sum >= target:
+                min_length = min(min_length, right - left + 1)
+
+                while left < right:
+                    cur_sum -= nums[left]
+                    left += 1
+                    if cur_sum >= target:
+                        min_length = min(min_length, right - left + 1)
+                    else:
+                        break
+            right += 1
+
+        if min_length == 2 ** 31 - 1:
+            min_length = 0
+
+        return min_length
