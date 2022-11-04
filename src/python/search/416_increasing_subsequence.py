@@ -19,18 +19,17 @@ class Solution:
         return self.results
 
     def traverse(self, nums, start_index, cur_path: List[int]):
-        if tuple(cur_path) in self.visited:
-            return
+        # 同层级去重
+        visited = set()
 
         if len(cur_path) > 1:
             self.results.append(copy(cur_path))
-            self.visited[tuple(cur_path)] = True
-
-            if start_index == len(nums):
-                return
 
         for i in range(start_index, len(nums)):
-            if i == 0 or nums[i] >= nums[i - 1]:
-                cur_path.append(nums[i])
-                self.traverse(nums, i + 1, cur_path)
-                cur_path.pop()
+            # 易错点: nums[i] >= nums[i-1] vs nums[i] >= cur_path[-1]
+            if (cur_path and nums[i] < cur_path[-1]) or nums[i] in visited:
+                continue
+            visited.add(nums[i])
+            cur_path.append(nums[i])
+            self.traverse(nums, i + 1, cur_path)
+            cur_path.pop()
