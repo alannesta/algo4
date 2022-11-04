@@ -33,3 +33,10 @@ class Solution:
             cur_path.append(nums[i])
             self.traverse(nums, i + 1, cur_path)
             cur_path.pop()
+
+            # !易错点! 这组逻辑有test case过不了
+            # if not cur_path or (nums[i] >= cur_path[-1] and nums[i] not in visited):
+            #     visited.add(nums[i])
+            #     cur_path.append(nums[i])
+            #     self.traverse(nums, i + 1, cur_path)
+            #     cur_path.pop()
