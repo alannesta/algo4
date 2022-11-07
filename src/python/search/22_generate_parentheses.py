@@ -10,6 +10,8 @@ Output: ["((()))","(()())","(())()","()(())","()()()"]
 from typing import List
 
 
+# 更为优化的解:
+# https://labuladong.github.io/algo/4/31/110/
 class Solution:
     def __init__(self):
         self.result = []
@@ -26,6 +28,9 @@ class Solution:
         self.traverse([])
         return self.result
 
+    # 和LC47 permutation unique相似的两层去重思路(剪枝)
+    # 额外加入is_valid的判定进行剪枝(类似n皇后, 数独)
+    # 最原始的暴力解法可以设计为先进性全排列, 再在全排列里进行is_valid的筛选, 当然会超时
     def traverse(self, cur_path):
         if len(cur_path) == len(self.pool):
             self.result.append("".join(cur_path))
