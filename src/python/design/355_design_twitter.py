@@ -27,6 +27,7 @@ class Twitter:
         else:
             return []
 
+    # 这道题user not exist yet的handle很烦人, 其它还好
     def follow(self, followerId: int, followeeId: int) -> None:
         # Optional: handle user does not exist yet
         if followerId in self.user_tracker:
@@ -42,6 +43,7 @@ class Twitter:
             self.user_tracker[followeeId] = n_user
             user.follow(n_user)
 
+    # 这道题user not exist yet的handle很烦人, 其它还好
     def unfollow(self, followerId: int, followeeId: int) -> None:
         if followerId in self.user_tracker:
             user = self.user_tracker[followerId]
