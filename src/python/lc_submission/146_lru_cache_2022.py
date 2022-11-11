@@ -64,7 +64,6 @@ class LRUCache:
             new_node.prev = self.node_list_head
             head_tmp.prev = new_node
 
-
     def _move_node_to_head(self, node):
         head_tmp = self.node_list_head.next
 
@@ -81,3 +80,45 @@ class LRUCache:
 
         node_tmp_prev.next = node_tmp_next
         node_tmp_next.prev = node_tmp_prev
+
+
+# 使用OrderedDict, 直接大结局
+# 不需要在自己manage linked list, OrderedDict帮你搞定
+from collections import OrderedDict
+
+class LRUCacheV2:
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.cache_size = 0
+        self.cache = OrderedDict()
+
+    def get(self, key: int) -> int:
+        if key not in self.cache:
+            return -1
+
+        val = self.cache[key]
+        # move cache node towards end
+        self.cache.move_to_end(key, last=True)
+        return val
+
+    def put(self, key: int, value: int) -> None:
+        if self.capacity == 0:
+            return
+
+        if key in self.cache:
+            # update cache
+            self.cache[key] = value
+            # move node to end of list
+            self.cache.move_to_end(key, last=True)
+            return
+
+        # add to cache
+        # new node are added to the end of internal list
+        self.cache[key] = value
+
+        if self.cache_size < self.capacity:
+            self.cache_size += 1
+        else:
+            # evict from head
+            # 这个api挺confusing的
+            self.cache.popitem(last=False)
