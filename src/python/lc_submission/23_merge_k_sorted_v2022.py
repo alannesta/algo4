@@ -22,8 +22,12 @@ class Solution:
 
         for head in lists:
             if head:
-                # (node val, node ref)
+                # heapq.heappush(min_heap, (head.val, head)) won't work here
+                # because of how python comparator works
+                # (1, 2) < (2, None) will throw error
                 heapq.heappush(min_heap, head.val)
+
+                # introduce node mapper to handle nodes with the same value
                 node_mapper[head.val].appendleft(head)
 
         while min_heap:
