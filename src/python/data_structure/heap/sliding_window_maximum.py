@@ -1,5 +1,6 @@
 """
-Given an array nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position. Return the max sliding window.
+Given an array nums, there is a sliding window of size k which is moving from the very left of the array to the very right.
+You can only see the k numbers in the window. Each time the sliding window moves right by one position. Return the max sliding window.
 
 Follow up:
 Could you solve it in linear time?
@@ -21,6 +22,7 @@ Window position                Max
 """
 import math
 from collections import deque
+
 
 # using a max pointer, if max is pop-ed out of the window, re-find max value by going over the current window
 class SlidingWindowMaximum:
@@ -139,4 +141,3 @@ k = 3
 # print(swm.max())
 # swm.slide()
 # print(swm.max())
-

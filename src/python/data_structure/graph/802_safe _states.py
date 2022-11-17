@@ -6,7 +6,7 @@ https://leetcode.com/problems/find-eventual-safe-states/
 
 from typing import List
 
-
+# 2022 update: 这个写法在新加入的test case下会超时
 class Solution:
     def __init__(self):
         # record nodes that has cycle
