@@ -18,6 +18,7 @@ class Solution:
         # Essential优化: 使用boolean list代替append, pop
         cur_path = [False] * numCourses
 
+
         for node_idx in graph.keys():
             if not self.can_finish:
                 break

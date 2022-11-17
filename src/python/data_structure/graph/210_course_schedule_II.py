@@ -67,7 +67,8 @@ class Solution:
 # 使用另一种topological sorting的算法:
 # https://en.wikipedia.org/wiki/Topological_sorting
 # 这种算法并不容易想到, 但是代码更为简洁. 解法的原理是每一次loop graph, 必然至少有一个节点的in order 为0(此node不再依赖其它任务)
-# 将inorder为0的节点加入solution, 并从剩余node的neighbour里移除此node, 然后再一次遍历graph
+# 将inorder为0的节点加入solution, 并从剩余node的neighbour里移除此node(将依赖于该节点的node的inorder减1), 然后再一次遍历graph, 重复
+# 上述过程
 class SolutionII:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
         course_order = []
