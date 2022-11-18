@@ -81,7 +81,7 @@ class Solution2:
             return False
 
         if self.unsafe_node[node]:
-            # cycle detected
+            # already unsafe, no need to proceed
             return False
 
         if visited[node]:
