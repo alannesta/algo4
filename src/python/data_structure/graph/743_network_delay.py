@@ -69,6 +69,8 @@ import heapq
 class Solution_DJ:
     def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
         graph = self.build_graph(times, n)
+        # 这里可以简化, 只使用一维数组来做记录, index就是node的number
+        # 初始化时将cost初始化为一个足够大的值, 比如sys.maxsize
         visited = [[False, 0]] * n  # index need to an offset
 
         min_heap = []
