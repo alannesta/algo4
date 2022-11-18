@@ -17,7 +17,6 @@ class Solution:
         self.traverse(graph, k, cur_path, 0)
 
         max_cost = 0
-        print(self.visited)
         for is_visited, cost in self.visited:
             if is_visited is False:
                 return -1
@@ -32,7 +31,11 @@ class Solution:
         if self.visited[node - 1][0] is True:
             if cur_cost < self.visited[node - 1][1]:
                 self.visited[node - 1] = (True, cur_cost)
+            else:
+                # cost is already greater, no need to proceed
+                return
         else:
+            # not visited yet
             self.visited[node - 1] = (True, cur_cost)
 
         if cur_path[node - 1]:
