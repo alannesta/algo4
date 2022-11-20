@@ -33,7 +33,7 @@ class Solution:
 
         while min_heap:
             cur_city = heapq.heappop(min_heap)
-            print('processing node :', cur_city.city_id, 'current step: ', cur_city.stop)
+            # print('processing node :', cur_city.city_id, 'current step: ', cur_city.stop)
             if cur_city.city_id == dst and cur_city.stop <= k + 1:
                 return cur_city.cost
 
@@ -74,19 +74,24 @@ class Solution2:
         queue.appendleft(DestState(city_id=src, cost=0, stop=0))
         level = 0
 
+        # break when level exceeds required stop
         while queue and level <= k:
-
+            # essential: drain queue (current level)
+            # using deque, not a heap
             for i in range(len(queue)):
                 cur_city = queue.pop()
 
                 for n_city in graph[cur_city.city_id]:
-                    # indent = '  ' * cur_city.stop
-                    # print(f'{indent}{cur_city.city_id}: processing neighbours: ', n_city[0])
+                    # only process nodes that it's either
+                    # 1. has not been visited
+                    # 2. has a smaller cost than previous visit
                     if visited[n_city[0]] > cur_city.cost + n_city[1]:
+                        indent = '  ' * cur_city.stop
+                        print(f'{indent}{cur_city.city_id}: processing neighbours: ', n_city[0])
                         visited[n_city[0]] = cur_city.cost + n_city[1]
                         queue.appendleft(DestState(city_id=n_city[0], cost=cur_city.cost + n_city[1],
                                                    stop=cur_city.stop + 1))
-
+            # track level
             level += 1
 
         return -1 if visited[dst] == sys.maxsize else visited[dst]
@@ -107,3 +112,6 @@ class Solution2:
 flights = [[0, 1, 5], [1, 2, 5], [0, 3, 2], [3, 1, 2], [1, 4, 1], [4, 2, 1]]
 
 print(Solution2().findCheapestPrice(n=5, flights=flights, src=0, dst=2, k=2))
+
+print('dajisasi')
+print(Solution().findCheapestPrice(n=5, flights=flights, src=0, dst=2, k=2))
