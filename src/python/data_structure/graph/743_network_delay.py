@@ -84,6 +84,11 @@ class Solution_DJ:
             # neighbour (node, cost)
             # visited [(bool, cost)...]
             cur_node = heapq.heappop(min_heap)
+
+            # !!Essential: 提前剪枝优化
+            if visited[cur_node[1] - 1][0] and cur_node[0] > visited[cur_node[1] - 1][1]:
+                continue
+
             for neighbour in graph[cur_node[1]]:
                 if not visited[neighbour[0] - 1][0]:
                     # first visit
@@ -102,7 +107,7 @@ class Solution_DJ:
                         continue
 
         max_cost = 0
-        print(visited)
+        # print(visited)
         for is_visited, cost in visited:
             if is_visited is False:
                 return -1
@@ -175,7 +180,6 @@ class Solution_BFS:
             graph[edge[0]].append((edge[1], edge[2]))
 
         return graph
-
 
 # times = [[0, 1, 5], [1, 2, 5], [0, 3, 2], [3, 1, 2], [1, 4, 1], [4, 2, 1]]
 #
