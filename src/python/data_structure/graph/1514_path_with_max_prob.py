@@ -12,19 +12,22 @@ class Solution:
         graph = self.build_graph(edges, succProb, n)
         # print(graph)
         node_heap = []
-        node_tracker = [-100] * n
+        node_tracker = [float('-inf')] * n
         # (node_id, -prob_to_node)
-        heapq.heappush(node_heap, (start, -1))
+        heapq.heappush(node_heap, (-1, start))
+        node_tracker[start] = 1 # do not forget to set start
 
         while node_heap:
             # (node_id, -prob_to_node)
             cur_node = heapq.heappop(node_heap)
-            node_id = cur_node[0]
-            prob_to_node = -cur_node[1]
+            node_id = cur_node[1]
+            prob_to_node = -cur_node[0]
 
             if node_id == end:
-                return prob_to_node
+                return node_tracker[node_id]
 
+            # !!Essential: this check could improve efficiency
+            # no need to visit neighbours
             if prob_to_node < node_tracker[node_id]:
                 continue
 
@@ -33,9 +36,8 @@ class Solution:
                 if chance_to_neb > node_tracker[neb[0]]:
                     # update max prob
                     node_tracker[neb[0]] = chance_to_neb
-                    heapq.heappush(node_heap, (neb[0], -chance_to_neb))
-                else:
-                    continue
+                    heapq.heappush(node_heap, (-chance_to_neb, neb[0]))
+
         return 0
 
     def build_graph(self, edges, prob, n):
@@ -51,7 +53,6 @@ class Solution:
             graph[edge[1]].append((edge[0], probability))
 
         return graph
-
 
 # n = 3
 # edges = [[0, 1], [1, 2], [0, 2]]
