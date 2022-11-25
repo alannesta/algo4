@@ -37,10 +37,6 @@ class Solution:
                 self.result = cur_cost
             return
 
-        # if node in cur_path:
-        #     # already on path
-        #     return
-
         node_height = self._get_height(node)
         prev_cost = cur_cost
         for neb in graph[node]:
