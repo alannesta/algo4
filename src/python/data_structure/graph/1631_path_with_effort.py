@@ -8,7 +8,7 @@ import sys
 
 
 # Dijkstra包含一些动态规划的思想我不是很理解
-# 暂时用DFS暴力求解
+# 暂时用DFS暴力求解, 超时
 class Solution:
     def __init__(self):
         # self.min_height_diff = -1
@@ -46,7 +46,7 @@ class Solution:
         for neb in graph[node]:
             if neb[0] in cur_path:
                 continue
-            cur_path.append(neb[0]) # 这里可以用boolean数组优化
+            cur_path.append(neb[0])  # 这里可以用boolean数组优化
             if abs(node_height - neb[1]) > cur_cost:
                 cur_cost = abs(node_height - neb[1])
                 # print('node:', node, '@', node_height, ', neb:', neb[0], '@', neb[1], ', cost:', cur_cost)
