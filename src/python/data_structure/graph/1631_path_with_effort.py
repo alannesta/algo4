@@ -4,53 +4,61 @@ https://leetcode.com/problems/path-with-minimum-effort/
 """
 
 from typing import List
-import heapq
 import sys
 
 
+# Dijkstra包含一些动态规划的思想我不是很理解
+# 暂时用DFS暴力求解
 class Solution:
+    def __init__(self):
+        # self.min_height_diff = -1
+        self.result = sys.maxsize
+        self.node_count = 0
+        self.heights = None
+
     def minimumEffortPath(self, heights: List[List[int]]) -> int:
         graph = self.build_graph(heights)
-        node_count = len(graph.keys())
+        print(graph)
+        self.node_count = len(graph.keys())
+        self.heights = heights
+        self.traverse(graph, 0, cur_path=[], cur_cost=0)
+        return self.result
 
-        node_heap = []
-        # init with current max diff
-        visited = [sys.maxsize] * node_count
-        node_cache = set()
-        # (node_id, current_max_diff)
-        # current_max_diff = 123
-        heapq.heappush(node_heap, (0, 0))
-        # node_cache.add(0)
-        # print(graph)
+    def _get_height(self, node_id):
+        y = node_id // len(self.heights[0])
+        x = node_id % len(self.heights[0])
 
-        def _get_height(node_id):
-            x = node_id // len(heights)
-            y = x % len(heights)
+        return self.heights[y][x]
 
-            return heights[x][y]
+    def traverse(self, graph, node, cur_path, cur_cost):
+        if node == self.node_count - 1:
+            # print('in!!!!')
+            if cur_cost < self.result:
+                self.result = cur_cost
+            return
 
+        # if node in cur_path:
+        #     # already on path
+        #     return
 
-        while node_heap:
-            cur_node = heapq.heappop(node_heap)
-
-            for neighbours in graph[cur_node[0]]:
-                if abs(neighbours[1] - _get_height(cur_node[1])) < visited[neighbours[0]]:
-                    # lower height diff than current max
-                    visited[neighbours[0]] = abs(neighbours[1] - cur_node[1])
-                    heapq.heappush(node_heap, neighbours)
-                else:
-                    # there is a path with lower diff to this node
-                    continue
-
-        # last node
-        return visited[-1]
+        node_height = self._get_height(node)
+        prev_cost = cur_cost
+        for neb in graph[node]:
+            if neb[0] in cur_path:
+                continue
+            cur_path.append(neb[0]) # 这里可以用boolean数组优化
+            if abs(node_height - neb[1]) > cur_cost:
+                cur_cost = abs(node_height - neb[1])
+                # print('node:', node, '@', node_height, ', neb:', neb[0], '@', neb[1], ', cost:', cur_cost)
+            self.traverse(graph, neb[0], cur_path, cur_cost)
+            cur_path.pop()
+            cur_cost = prev_cost
 
     def build_graph(self, heights):
         y = len(heights)
         x = len(heights[0])
 
         graph = {}
-
         node_id = 0
 
         def _add_neighbours(graph, node_id, i, j):
@@ -60,12 +68,11 @@ class Solution:
                 (0, -1),  # down
                 (0, 1)  # up
             ]
-
             for op in ops:
-                if 0 <= i + op[0] <= y - 1 and 0 <= j + op[1] <= y - 1:
-                    nid = node_id + op[1] + op[0] * y
+                if 0 <= j + op[0] <= x - 1 and 0 <= i + op[1] <= y - 1:
+                    nid = node_id + op[0] + op[1] * y
                     # (node, heights)
-                    graph[node_id].append((nid, heights[i + op[0]][j + op[1]]))
+                    graph[node_id].append((nid, heights[i + op[1]][j + op[0]]))
 
         for i in range(y):
             for j in range(x):
@@ -76,6 +83,9 @@ class Solution:
         return graph
 
 
-heights = [[1, 2, 2], [3, 8, 2], [5, 3, 5]]
+# heights = [[1, 2, 2], [3, 8, 2], [5, 3, 5]]
+# heights = [[1, 10, 6, 7, 9, 10, 4, 9]]
 
-Solution().minimumEffortPath(heights)
+heights = [[1, 2, 3], [3, 8, 4], [5, 3, 5]]
+# heights = [[1, 2, 1, 1, 1], [1, 2, 1, 2, 1], [1, 2, 1, 2, 1], [1, 2, 1, 2, 1], [1, 1, 1, 2, 1]]
+print(Solution().minimumEffortPath(heights))
